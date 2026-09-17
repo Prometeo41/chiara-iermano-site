@@ -58,17 +58,10 @@
     <text x="960" y="620" font-family="Georgia, 'Playfair Display', serif" font-style="italic"
           font-size="620" fill="url(#monoFade)" text-anchor="middle" class="hero-mono">C</text>
 
-    <!-- Linee di contorno fluide, stile "one line drawing" moda -->
-    <path class="flow-line line-1" d="M 60 180 C 220 80, 340 260, 300 420 S 120 640, 260 720 S 520 700, 560 540"
-          fill="none" stroke="url(#goldLine)" stroke-width="2" stroke-linecap="round"/>
-    <path class="flow-line line-2" d="M 140 60 C 300 160, 260 320, 400 360 S 620 320, 640 480 S 460 660, 600 760"
-          fill="none" stroke="url(#goldLine)" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
-    <path class="flow-line line-3" d="M 1120 140 C 980 220, 1040 380, 900 420 S 760 380, 700 540"
-          fill="none" stroke="url(#goldLine)" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
   </svg>
 
-  <!-- Particelle dorate fluttuanti -->
-  <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+  <!-- Molecole dorate che si compongono e si scompongono -->
+  <canvas class="hero-molecules" id="hero-molecules" aria-hidden="true"></canvas>
 
   <div class="hero-content">
     <p class="eyebrow">Fashion &amp; Event Producer — Napoli</p>
@@ -270,5 +263,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/molecules.js"></script>
 </body>
 </html>
