@@ -562,6 +562,40 @@ section { padding: 96px 0; }
   gap: 8px;
 }
 
+/* ===== Social rows ===== */
+.social-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.social-row a {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  transition: transform var(--transition), color var(--transition);
+}
+.social-row svg { width: 22px; height: 22px; fill: currentColor; }
+.social-row a:hover { transform: translateY(-2px); }
+.social-hero {
+  position: relative;
+  z-index: 1;
+  margin-top: 36px;
+  color: rgba(255,255,255,0.85);
+}
+.social-hero a:hover { color: var(--color-gold-soft); }
+.social-footer {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+}
+.social-footer a:hover { color: var(--color-gold); }
+
 /* ===== Reveal animation ===== */
 [data-reveal] {
   opacity: 0;
