@@ -44,46 +44,46 @@
       vx: rand(-0.08, 0.08), vy: rand(-0.06, 0.06),
       radius: rand(55, 110),
       phase: "gather", t: rand(0, 4000),
-      gatherT: rand(6000, 11000), holdT: rand(3000, 6000), burstT: rand(2500, 4000)
+      gatherT: rand(9000, 14000), holdT: rand(4000, 7000), burstT: rand(6000, 9000)
     };
   }
+
+  // Movimento a velocità costante e lenta: ogni atomo punta verso la sua
+  // posizione ideale (orbita stretta quando la molecola è unita, orbita larga
+  // quando si scompone) ruotando dolcemente la direzione, mai la velocità.
+  const SPEED = 0.022;        // px per millisecondo (circa 1,3 px al secondo a 60 fps)
+  const TURN = 0.0025;        // quanto in fretta la direzione si adatta
 
   function step(dt) {
     for (const cl of clusters) {
       cl.t += dt;
-      cl.x += cl.vx * dt * 0.06; cl.y += cl.vy * dt * 0.06;
+      cl.x += cl.vx * dt * 0.03; cl.y += cl.vy * dt * 0.03;
       if (cl.x < 0 || cl.x > W) cl.vx *= -1;
       if (cl.y < 0 || cl.y > H) cl.vy *= -1;
       if (cl.phase === "gather" && cl.t > cl.gatherT) { cl.phase = "hold"; cl.t = 0; }
-      else if (cl.phase === "hold" && cl.t > cl.holdT) { cl.phase = "burst"; cl.t = 0;
-        for (const a of atoms) if (a.cluster === cl.id) {
-          const ang = Math.atan2(a.y - cl.y, a.x - cl.x) + rand(-0.4, 0.4);
-          const sp = rand(0.5, 1.3);
-          a.vx = Math.cos(ang) * sp; a.vy = Math.sin(ang) * sp;
-        }
-      }
+      else if (cl.phase === "hold" && cl.t > cl.holdT) { cl.phase = "burst"; cl.t = 0; }
       else if (cl.phase === "burst" && cl.t > cl.burstT) {
-        // nuova molecola altrove: gli atomi vengono riattratti verso un nuovo centro
         const n = newCluster(cl.id, rand(W * 0.1, W * 0.9), rand(H * 0.1, H * 0.9));
         n.t = 0; clusters[clusters.indexOf(cl)] = n;
       }
     }
     for (const a of atoms) {
       const cl = clusters[a.cluster];
-      if (cl.phase !== "burst") {
-        // attrazione morbida verso una posizione orbitale intorno al centro
-        const dx = cl.x - a.x, dy = cl.y - a.y;
-        const d = Math.hypot(dx, dy) || 1;
-        const target = cl.radius * a.bond;
-        const pull = (d - target) * 0.00025 * dt;
-        a.vx += (dx / d) * pull; a.vy += (dy / d) * pull;
-        // leggera rotazione orbitale
-        a.vx += (-dy / d) * 0.0006 * dt * 0.1; a.vy += (dx / d) * 0.0006 * dt * 0.1;
-        a.vx *= 0.985; a.vy *= 0.985;
-      } else {
-        a.vx *= 0.995; a.vy *= 0.995;
-      }
-      a.x += a.vx * dt * 0.06; a.y += a.vy * dt * 0.06;
+      const dx = cl.x - a.x, dy = cl.y - a.y;
+      const d = Math.hypot(dx, dy) || 1;
+      // orbita stretta da uniti, larga mentre si scompone
+      const target = cl.phase === "burst" ? cl.radius * 3.2 * a.bond : cl.radius * a.bond;
+      const radial = d > target ? 1 : -1;            // avvicinarsi o allontanarsi
+      const near = Math.min(1, Math.abs(d - target) / 40);
+      // direzione desiderata: componente radiale + componente orbitale
+      let ddx = (dx / d) * radial * near + (-dy / d) * 0.6;
+      let ddy = (dy / d) * radial * near + (dx / d) * 0.6;
+      const dl = Math.hypot(ddx, ddy) || 1; ddx /= dl; ddy /= dl;
+      if (a.dx === undefined) { a.dx = ddx; a.dy = ddy; }
+      const k = Math.min(1, TURN * dt);
+      a.dx += (ddx - a.dx) * k; a.dy += (ddy - a.dy) * k;
+      const nl = Math.hypot(a.dx, a.dy) || 1;
+      a.x += (a.dx / nl) * SPEED * dt; a.y += (a.dy / nl) * SPEED * dt;
       if (a.x < -50) a.x = W + 50; if (a.x > W + 50) a.x = -50;
       if (a.y < -50) a.y = H + 50; if (a.y > H + 50) a.y = -50;
     }
@@ -131,6 +131,6 @@
 
   window.addEventListener("resize", resize);
   resize();
-  if (reduce) { for (let i = 0; i < 200; i++) step(16); draw(); }
+  if (reduce) { for (let i = 0; i < 400; i++) step(16); draw(); }
   else requestAnimationFrame(frame);
 })();
