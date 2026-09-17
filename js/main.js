@@ -11,32 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Anno corrente nel footer
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Particelle dorate fluttuanti nell'hero (generate solo se l'utente
-  // non ha chiesto meno animazioni)
-  const particlesHost = document.getElementById("hero-particles");
-  const reduceMotionForParticles = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-  if (particlesHost && !reduceMotionForParticles) {
-    const COUNT = 26;
-    for (let i = 0; i < COUNT; i++) {
-      const p = document.createElement("span");
-      p.className = "particle";
-      const left = Math.random() * 100;
-      const size = 2 + Math.random() * 4;
-      const duration = 9 + Math.random() * 10;
-      const delay = Math.random() * 12;
-      const drift = (Math.random() * 80 - 40).toFixed(0) + "px";
-      p.style.left = left + "%";
-      p.style.width = size + "px";
-      p.style.height = size + "px";
-      p.style.setProperty("--drift", drift);
-      p.style.animationDuration = duration + "s";
-      p.style.animationDelay = delay + "s";
-      particlesHost.appendChild(p);
-    }
-  }
-
   // Header che cambia stile allo scroll
   const onScroll = () => {
     if (window.scrollY > 40) {
