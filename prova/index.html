@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Chiara Iermano</title>
+<meta name="description" content="Chiara Iermano, fashion and event producer based in Naples. Editorials, campaigns and events for brands and magazines.">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#000000;
+    --ink-2:#414141;
+    --rule:#000000;
+    --gutter:clamp(16px, 6vw, 88px);
+    --font:"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-size:11px;
+    line-height:1.6;
+    letter-spacing:.02em;
+    -webkit-font-smoothing:antialiased;
+    padding-inline:var(--gutter);
+    padding-block:0;
+    display:flex;
+    flex-direction:column;
+    min-height:100%;
+  }
+  a{color:inherit;text-decoration:none}
+  a:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+
+  /* ---------- header ---------- */
+  header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:28px;
+    flex-wrap:wrap;
+  }
+  .brand{
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    line-height:1.2;
+  }
+  nav{display:flex;gap:clamp(14px, 3vw, 30px);flex-wrap:wrap}
+  nav a{
+    font-size:10px;
+    text-transform:uppercase;
+    padding:2px 4px 6px;
+    border-bottom:1px solid transparent;
+    line-height:1.2;
+  }
+  nav a[aria-current="page"]{border-bottom-color:var(--rule)}
+  nav a:hover{border-bottom-color:var(--rule)}
+
+  /* ---------- views ---------- */
+  main{flex:1;display:flex;flex-direction:column}
+  .view{display:none;flex:1;flex-direction:column;padding-block:56px 48px}
+  .view.is-active{display:flex}
+
+  /* home */
+  .home-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:clamp(8px, 1.6vw, 20px);
+    margin-top:12px;
+  }
+  .home-grid figure{margin:0;overflow:hidden;background:#f2f2f2}
+  .home-grid img{
+    display:block;width:100%;height:100%;
+    aspect-ratio:3 / 4;object-fit:cover;
+    filter:grayscale(0);
+  }
+  .tagline{
+    max-width:60ch;
+    text-transform:uppercase;
+    color:var(--ink-2);
+    margin:0 0 4px;
+  }
+
+  /* about */
+  .about{
+    display:grid;
+    grid-template-columns:minmax(0, 220px) minmax(0, 52ch);
+    gap:clamp(24px, 5vw, 64px);
+    align-items:start;
+    margin-inline:auto;
+    width:100%;
+    max-width:900px;
+  }
+  .about img{display:block;width:100%;aspect-ratio:4 / 5;object-fit:cover}
+  .about-text p{
+    text-transform:uppercase;
+    text-align:justify;
+    margin:0 0 1.6em;
+  }
+  .about-text p:last-child{margin-bottom:0}
+
+  /* services + clients: text columns */
+  .cols{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:36px 48px;
+    margin-inline:auto;
+    width:100%;
+    max-width:900px;
+  }
+  .block h2{
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    margin:0 0 14px;
+    letter-spacing:.04em;
+  }
+  .block ul{list-style:none;margin:0;padding:0}
+  .block li{text-transform:uppercase;margin:0 0 2px}
+  .block li.note{color:var(--ink-2)}
+  .block + .block{margin-top:32px}
+
+  /* contacts */
+  .contacts{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    min-height:40vh;
+    text-align:center;
+  }
+  .contacts .mail{
+    font-size:clamp(15px, 2.4vw, 20px);
+    text-decoration:underline;
+    text-underline-offset:4px;
+    text-decoration-thickness:1px;
+  }
+  .contacts .sub{text-transform:uppercase;color:var(--ink-2)}
+
+  /* footer */
+  footer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    padding-block:24px 34px;
+  }
+  footer a{display:inline-flex;width:16px;height:16px}
+  footer svg{width:16px;height:16px;fill:var(--ink)}
+  footer .copy{
+    position:absolute; /* visually hidden but present for screen readers */
+    width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
+  }
+
+  @media (max-width:720px){
+    header{padding-top:20px}
+    nav{width:100%;gap:18px}
+    .home-grid{grid-template-columns:1fr 1fr}
+    .home-grid figure:nth-child(3){grid-column:1 / -1}
+    .home-grid figure:nth-child(3) img{aspect-ratio:16 / 10}
+    .about{grid-template-columns:1fr}
+    .about img{max-width:220px}
+    .about-text p{text-align:left}
+    .view{padding-block:32px 32px}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .view.is-active{animation:fade .35s ease}
+    @keyframes fade{from{opacity:0}to{opacity:1}}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#home">Chiara Iermano</a>
+  <nav aria-label="Menu principale">
+    <a href="#home" data-view="home">Home</a>
+    <a href="#about" data-view="about">About</a>
+    <a href="#services" data-view="services">Services</a>
+    <a href="#clients" data-view="clients">Clients</a>
+    <a href="#contacts" data-view="contacts">Contacts</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section class="view" id="view-home" aria-label="Home">
+    <p class="tagline">Chiara Iermano, fashion and event producer based in Naples. Editorials, campaigns and events for brands and magazines.</p>
+    <div class="home-grid">
+      <figure><img src="images/01-vanity-teen.jpg" alt="Editoriale Vanity Teen Magazine, ph. Giuseppe Attanasio"></figure>
+      <figure><img src="images/05-soallure-ss20.jpg" alt="Campagna Soallure S/S 20, ph. Emilio Tini"></figure>
+      <figure><img src="images/02-man-in-town.jpg" alt="Editoriale Man In Town, ph. Giuseppe Attanasio"></figure>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="view" id="view-about" aria-label="About">
+    <div class="about">
+      <img src="images/about-chiara.jpg" alt="Chiara Iermano">
+      <div class="about-text">
+        <p>Fashion and event producer working across editorial, advertising and live events. Based in Naples, available for projects throughout Italy.</p>
+        <p>She turns a creative idea into a finished project: she coordinates editorials and campaigns for brands and magazines, handles casting, location scouting and on-set logistics, and manages the timeline from concept to delivery.</p>
+        <p>Her work spans fashion editorials, brand campaigns and events that bring together fashion, image and attention to detail — presentations, shows, press days and tailor-made occasions.</p>
+        <p>She collaborates with photographers, stylists, creative teams and magazines, including Vanity Teen, Man In Town, MMScene and Lewis Magazine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="view" id="view-services" aria-label="Services">
+    <div class="cols">
+      <div>
+        <div class="block">
+          <h2>Production</h2>
+          <ul>
+            <li>Fashion editorials</li>
+            <li>Photo and video shootings</li>
+            <li class="note">(editorials, adv, e-commerce, social media content)</li>
+            <li>Casting</li>
+            <li>Location scouting</li>
+            <li>On-set coordination and logistics</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h2>Campaigns</h2>
+          <ul>
+            <li>Brand campaigns</li>
+            <li>Creative planning</li>
+            <li>Team and talent management</li>
+            <li>Budget and timeline</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block">
+          <h2>Events</h2>
+          <ul>
+            <li>Fashion shows</li>
+            <li>Presentations and press days</li>
+            <li>Brand activations</li>
+            <li>Tailor-made occasions</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h2>Consulting</h2>
+          <ul>
+            <li>Production planning</li>
+            <li>Supplier and crew sourcing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="view" id="view-clients" aria-label="Clients">
+    <div class="cols">
+      <div class="block">
+        <h2>Editorial</h2>
+        <ul>
+          <li>Vanity Teen Magazine</li>
+          <li>Man In Town</li>
+          <li>MMScene</li>
+          <li>Lewis Magazine</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h2>Advertising</h2>
+        <ul>
+          <li>Soallure — S/S 20 campaign</li>
+          <li>Soallure — F/W 2019 campaign</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h2>Photographers</h2>
+        <ul>
+          <li>Giuseppe Attanasio</li>
+          <li>Emilio Tini</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="view" id="view-contacts" aria-label="Contacts">
+    <div class="contacts">
+      <a class="mail" href="mailto:info@chiaraiermano.com">info@chiaraiermano.com</a>
+      <a class="sub" href="https://www.instagram.com/c_iermano/" target="_blank" rel="noopener">Instagram @c_iermano</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a href="https://www.instagram.com/c_iermano/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1.1.4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1.1.4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1.1-.4-2.2-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1.1-.4 2.2-.4 1.3-.1 1.6-.1 4.8-.1M12 0C8.7 0 8.3 0 7.1.1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.7-2.1 1.4C1.3 2.6.9 3.3.6 4.1.3 4.9.1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.3 2.2.6 2.9.3.8.7 1.5 1.4 2.1.6.7 1.3 1.1 2.1 1.4.8.3 1.6.5 2.9.6 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c1.3-.1 2.2-.3 2.9-.6.8-.3 1.5-.7 2.1-1.4.7-.6 1.1-1.3 1.4-2.1.3-.8.5-1.6.6-2.9.1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.1-1.3-.3-2.2-.6-2.9-.3-.8-.7-1.5-1.4-2.1C21.4 1.3 20.7.9 19.9.6 19.1.3 18.2.1 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>
+  </a>
+  <a href="mailto:info@chiaraiermano.com" aria-label="Email">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h20v16H2V4zm2 2v.5l8 5.3 8-5.3V6H4zm16 3.1-8 5.3-8-5.3V18h16V9.1z"/></svg>
+  </a>
+  <span class="copy">© Chiara Iermano</span>
+</footer>
+
+<script>
+  (function(){
+    var views = ["home","about","services","clients","contacts"];
+    var links = document.querySelectorAll("nav a[data-view]");
+    function show(name){
+      if (views.indexOf(name) === -1) name = "home";
+      views.forEach(function(v){
+        var el = document.getElementById("view-" + v);
+        if (el) el.classList.toggle("is-active", v === name);
+      });
+      links.forEach(function(a){
+        if (a.dataset.view === name) a.setAttribute("aria-current","page");
+        else a.removeAttribute("aria-current");
+      });
+      document.title = (name === "home" ? "" : name.toUpperCase() + " | ") + "Chiara Iermano";
+      window.scrollTo(0,0);
+    }
+    function fromHash(){ show((location.hash || "#home").replace("#","")); }
+    window.addEventListener("hashchange", fromHash);
+    fromHash();
+  })();
+</script>
+
+</body>
+</html>
