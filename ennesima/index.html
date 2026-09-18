@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENNESIMA Studio</title>
+<meta name="description" content="Multidisciplinary studio providing creative solutions. Creative Direction, Art Direction, Production, Brand Consulting, Exhibition & Event Design, Interior Design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --burgundy: #3b0a15;
+  --burgundy-deep: #2a0810;
+  --periwinkle: #8b9cc7;
+  --periwinkle-light: #a8b5d4;
+  --cream: #ede8e3;
+  --cream-light: #f5f2ef;
+  --text-dark: #1a1a1a;
+  --text-light: #b8c0d8;
+  --text-body-light: #9ba3b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;
+  color: var(--text-dark);
+  background: var(--cream-light);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px;
+  background: rgba(237,232,227,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background .3s, box-shadow .3s;
+}
+nav.scrolled {
+  background: rgba(237,232,227,0.97);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+nav.dark-bg {
+  background: rgba(59,10,21,0.92);
+}
+nav.dark-bg.scrolled {
+  background: rgba(59,10,21,0.97);
+}
+
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+nav.dark-bg .nav-brand { color: var(--periwinkle-light); }
+
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity .3s;
+}
+.nav-links a:hover, .nav-links a.active { opacity: 1; }
+nav.dark-bg .nav-links a { color: var(--periwinkle-light); }
+
+/* hamburger */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-toggle span {
+  display: block; width: 24px; height: 1.5px;
+  background: var(--text-dark); margin: 6px 0;
+  transition: transform .3s, opacity .3s;
+}
+nav.dark-bg .nav-toggle span { background: var(--periwinkle-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--burgundy);
+  padding: 120px 48px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 120px);
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.hero-logo .studio {
+  display: block;
+  font-style: italic;
+  font-size: 0.45em;
+  letter-spacing: 4px;
+  text-transform: none;
+  margin-top: -8px;
+  text-align: right;
+  padding-right: 5%;
+}
+
+.hero-services {
+  margin-top: 60px;
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 8px 24px;
+  max-width: 900px;
+}
+.hero-services span {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-body-light);
+  white-space: nowrap;
+}
+.hero-services .sep {
+  color: var(--text-body-light);
+  opacity: 0.4;
+}
+
+.scroll-hint {
+  position: absolute; bottom: 40px;
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--periwinkle), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+/* ── SECTIONS ── */
+section { padding: 120px 48px; }
+section.dark { background: var(--burgundy); }
+section.light { background: var(--cream-light); }
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 1.2;
+}
+section.dark .section-title { color: var(--periwinkle); }
+section.light .section-title { color: var(--burgundy); }
+
+.section-subtitle {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  max-width: 700px;
+  margin: -24px auto 64px;
+  line-height: 1.8;
+}
+section.dark .section-subtitle { color: var(--text-body-light); }
+section.light .section-subtitle { color: var(--text-dark); opacity: 0.6; }
+
+/* ── PORTFOLIO GRID ── */
+.portfolio-category {
+  margin-bottom: 100px;
+}
+.portfolio-category:last-child { margin-bottom: 0; }
+
+.cat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+  padding: 0 4px;
+}
+.cat-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  line-height: 1;
+}
+.cat-title-right {
+  composes: cat-title;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  line-height: 1;
+}
+
+.photo-row {
+  display: grid;
+  gap: 4px;
+}
+.photo-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.photo-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.photo-row.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.photo-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.photo-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+.photo-item.landscape { aspect-ratio: 4/3; }
+.photo-item.square { aspect-ratio: 1; }
+.photo-item.wide { aspect-ratio: 16/10; }
+
+.photo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.photo-item:hover img {
+  transform: scale(1.04);
+}
+
+.photo-item .overlay {
+  position: absolute; inset: 0;
+  background: rgba(59, 10, 21, 0);
+  transition: background .4s;
+  display: flex; align-items: center; justify-content: center;
+}
+.photo-item:hover .overlay {
+  background: rgba(59, 10, 21, 0.2);
+}
+
+/* ── CHI SIAMO ── */
+.about-content {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.about-content p {
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+  color: var(--text-body-light);
+  margin-bottom: 24px;
+  text-align: justify;
+}
+.about-content strong {
+  font-weight: 500;
+  color: var(--periwinkle-light);
+}
+.about-content .highlight {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--periwinkle);
+  font-style: italic;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 64px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.team-member h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+  margin-bottom: 12px;
+}
+.team-member p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-body-light);
+}
+
+/* ── METODO ── */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.method-step .number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 48px;
+  color: var(--periwinkle);
+  opacity: 0.5;
+  margin-bottom: 16px;
+  display: block;
+}
+.method-step h3 {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--periwinkle-light);
+  margin-bottom: 16px;
+}
+.method-step p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-body-light);
+}
+
+/* ── SERVIZI ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 48px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.service-item h3 {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--periwinkle-light);
+  margin-bottom: 12px;
+}
+.service-item h3::after {
+  content: ' \2014';
+  opacity: 0.4;
+}
+.service-item p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-body-light);
+}
+
+/* ── CONTACT ── */
+.contact-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-cta {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--periwinkle-light);
+  margin-bottom: 80px;
+}
+.contact-row {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--text-body-light);
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+.contact-row .label {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--periwinkle-light);
+  margin-right: 16px;
+}
+.contact-row a {
+  color: var(--text-body-light);
+  text-decoration: none;
+  transition: color .3s;
+}
+.contact-row a:hover {
+  color: var(--periwinkle);
+}
+.contact-row .divider {
+  margin: 0 12px;
+  opacity: 0.4;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 40px 48px;
+  text-align: center;
+  background: var(--burgundy-deep);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-body-light);
+  opacity: 0.5;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.92);
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+}
+.lightbox-close {
+  position: absolute; top: 24px; right: 32px;
+  background: none; border: none;
+  color: #fff; font-size: 28px;
+  cursor: pointer; opacity: 0.7;
+  transition: opacity .3s;
+}
+.lightbox-close:hover { opacity: 1; }
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: none; border: none;
+  color: #fff; font-size: 36px;
+  cursor: pointer; opacity: 0.5;
+  transition: opacity .3s;
+  padding: 20px;
+}
+.lightbox-nav:hover { opacity: 1; }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links {
+    position: fixed; top: 0; right: -280px;
+    width: 280px; height: 100vh;
+    background: var(--cream-light);
+    flex-direction: column;
+    padding: 80px 32px 32px;
+    gap: 24px;
+    transition: right .3s;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+  }
+  nav.dark-bg .nav-links { background: var(--burgundy); }
+  .nav-links.open { right: 0; }
+  .nav-links a { font-size: 15px; opacity: 0.8; }
+  .nav-toggle { display: block; }
+
+  section { padding: 80px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .hero-services { gap: 4px 16px; }
+  .hero-services span { font-size: 10px; letter-spacing: 1.5px; }
+
+  .photo-row.cols-4,
+  .photo-row.cols-5 { grid-template-columns: repeat(2, 1fr); }
+  .photo-row.cols-3 { grid-template-columns: repeat(2, 1fr); }
+
+  .cat-header { flex-direction: column; gap: 4px; }
+
+  .method-grid { grid-template-columns: 1fr; gap: 40px; }
+  .services-grid { grid-template-columns: 1fr; gap: 32px; }
+  .team { grid-template-columns: 1fr; gap: 32px; }
+}
+
+@media (max-width: 480px) {
+  .photo-row.cols-4,
+  .photo-row.cols-5,
+  .photo-row.cols-3 { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-brand">Ennesima Studio</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#projects">Selected Projects</a></li>
+    <li><a href="#about">Chi Siamo</a></li>
+    <li><a href="#services">Servizi</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-logo">
+    Ennesima<span class="studio">Studio</span>
+  </div>
+  <div class="hero-services">
+    <span>Creative Direction</span><span class="sep">&mdash;</span>
+    <span>Art Direction</span><span class="sep">&mdash;</span>
+    <span>Production</span><span class="sep">&mdash;</span>
+    <span>Brand Consulting</span><span class="sep">&mdash;</span>
+    <span>Exhibition / Event &amp; Interior Design</span>
+  </div>
+  <div class="scroll-hint"></div>
+</section>
+
+<!-- SELECTED PROJECTS -->
+<section class="light" id="projects">
+  <h2 class="section-title fade-in">Selected Projects</h2>
+
+  <!-- Fashion Campaign -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Fashion</span>
+      <span class="cat-title-right">Campaign</span>
+    </div>
+    <div class="photo-row cols-4">
+      <div class="photo-item"><img src="images/fashion-campaign-p4-1.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p4-2.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p4-3.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p4-4.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+    </div>
+    <div class="photo-row cols-4" style="margin-top:4px">
+      <div class="photo-item"><img src="images/fashion-campaign-p5-1.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p5-2.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p5-3.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p5-4.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+    </div>
+    <div class="photo-row cols-4" style="margin-top:4px">
+      <div class="photo-item"><img src="images/fashion-campaign-p6-1.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p6-2.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p6-3.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/fashion-campaign-p6-4.jpg" alt="Fashion Campaign" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Still Life -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Still</span>
+      <span class="cat-title-right">Life</span>
+    </div>
+    <div class="photo-row cols-4">
+      <div class="photo-item"><img src="images/still-life-p7-1.jpg" alt="Still Life" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/still-life-p7-2.jpg" alt="Still Life" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/still-life-p7-3.jpg" alt="Still Life" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/still-life-p7-4.jpg" alt="Still Life" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Worldwide Campaign Intimissimi -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Worldwide Campaign</span>
+      <span class="cat-title-right">Intimissimi</span>
+    </div>
+    <div class="photo-row cols-4">
+      <div class="photo-item"><img src="images/worldwide-intimissimi-p8-1.jpg" alt="Worldwide Campaign Intimissimi" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/worldwide-intimissimi-p8-2.jpg" alt="Worldwide Campaign Intimissimi" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/worldwide-intimissimi-p8-3.jpg" alt="Worldwide Campaign Intimissimi" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/worldwide-intimissimi-p8-4.jpg" alt="Worldwide Campaign Intimissimi" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Editorial Design -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Editorial</span>
+      <span class="cat-title-right">Design</span>
+    </div>
+    <div class="photo-row cols-3">
+      <div class="photo-item landscape"><img src="images/editorial-design-p9-1.jpg" alt="Editorial Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item landscape"><img src="images/editorial-design-p9-2.jpg" alt="Editorial Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item landscape"><img src="images/editorial-design-p9-3.jpg" alt="Editorial Design" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Brand Identity -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Brand</span>
+      <span class="cat-title-right">Identity</span>
+    </div>
+    <div class="photo-row cols-5">
+      <div class="photo-item"><img src="images/brand-identity-p10-1.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p10-2.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p10-3.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p10-4.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p10-5.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+    </div>
+    <div class="photo-row cols-4" style="margin-top:4px">
+      <div class="photo-item"><img src="images/brand-identity-p11-1.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p11-2.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p11-3.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/brand-identity-p11-4.jpg" alt="Brand Identity" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Tailored Projects -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Tailored</span>
+      <span class="cat-title-right">Projects</span>
+    </div>
+    <div class="photo-row cols-4">
+      <div class="photo-item"><img src="images/tailored-projects-p12-1.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p12-2.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p12-3.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p12-4.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+    </div>
+    <div class="photo-row cols-4" style="margin-top:4px">
+      <div class="photo-item"><img src="images/tailored-projects-p13-1.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p13-2.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p13-3.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/tailored-projects-p13-4.jpg" alt="Tailored Projects" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Fashion Film & Video Content -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Fashion Film</span>
+      <span class="cat-title-right">&amp; Video Content</span>
+    </div>
+    <div class="photo-row cols-2">
+      <div class="photo-item wide"><img src="images/fashion-film-p14-1.jpg" alt="Fashion Film" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item wide"><img src="images/fashion-film-p14-2.jpg" alt="Fashion Film" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Set & Interior Design -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Set &amp; Interior</span>
+      <span class="cat-title-right">Design</span>
+    </div>
+    <div class="photo-row cols-4">
+      <div class="photo-item"><img src="images/set-interior-p15-1.jpg" alt="Set & Interior Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/set-interior-p15-2.jpg" alt="Set & Interior Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/set-interior-p15-3.jpg" alt="Set & Interior Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item"><img src="images/set-interior-p15-4.jpg" alt="Set & Interior Design" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+
+  <!-- Exhibition / Event Design -->
+  <div class="portfolio-category fade-in">
+    <div class="cat-header">
+      <span class="cat-title">Exhibition / Event</span>
+      <span class="cat-title-right">Design</span>
+    </div>
+    <div class="photo-row cols-4" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="photo-item" style="grid-column: span 2; grid-row: span 2; aspect-ratio: auto;">
+        <img src="images/exhibition-event-p16-2.jpg" alt="Exhibition / Event Design" loading="lazy">
+        <div class="overlay"></div>
+      </div>
+      <div class="photo-item square"><img src="images/exhibition-event-p16-1.jpg" alt="Exhibition / Event Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item square"><img src="images/exhibition-event-p16-5.jpg" alt="Exhibition / Event Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item square"><img src="images/exhibition-event-p16-3.jpg" alt="Exhibition / Event Design" loading="lazy"><div class="overlay"></div></div>
+      <div class="photo-item square"><img src="images/exhibition-event-p16-4.jpg" alt="Exhibition / Event Design" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHI SIAMO -->
+<section class="dark" id="about">
+  <h2 class="section-title fade-in">Chi Siamo</h2>
+  <div class="about-content fade-in">
+    <p><strong>Ennesima Studio</strong> nasce dall'incontro tra <strong>Chiara e Lisa</strong>, professioniste con oltre dieci anni di esperienza. Un percorso che intreccia <strong>Creative Direction, Art Direction, Production, Brand Consulting, Exhibition &amp; Event Design e Interior Design</strong>, per offrire ai brand una visione a 360&deg; e un approccio su misura.</p>
+    <p>Collaboriamo con realt&agrave; emergenti e consolidate, in particolare nei settori fashion e lifestyle, accompagnandole nello sviluppo di un'identit&agrave; forte e coerente. Dalla strategia alla produzione, fino alle campagne con respiro worldwide, traduciamo idee in esperienze capaci di lasciare traccia.</p>
+    <div class="highlight">Non siamo l'ennesima agenzia: siamo uno spazio creativo che unisce metodo, visione e cura estetica.</div>
+    <p>Lavoriamo a quattro mani per offrire direzione creativa, produzione e consulenza di brand con un approccio sartoriale: <strong>strategia nitida, estetica ricercata, esecuzione rigorosa.</strong></p>
+  </div>
+  <div class="team fade-in">
+    <div class="team-member">
+      <h3>Chiara</h3>
+      <p>Art Director, Producer e Project Manager. Coordina concept complessi e supervisione esecutiva, garantendo coerenza tra idea e realizzazione.</p>
+    </div>
+    <div class="team-member">
+      <h3>Lisa</h3>
+      <p>Creative Director, Art Director e Interior Designer. Si occupa di identit&agrave; visiva, concept fotografico e design editoriale, traducendo strategie in immagini distintive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IL NOSTRO METODO -->
+<section class="dark" id="method" style="padding-top: 40px;">
+  <h2 class="section-title fade-in">Il Nostro Metodo</h2>
+  <p class="section-subtitle fade-in">Lavoriamo seguendo tre fasi chiare e ripetibili: <strong style="color:var(--periwinkle-light)">insight, progetto, produzione.</strong></p>
+  <div class="method-grid fade-in">
+    <div class="method-step">
+      <span class="number">01</span>
+      <h3>Insight &amp; Strategia</h3>
+      <p>Analizziamo brand, pubblico e contesto per definire posizionamento e obiettivi concreti.</p>
+    </div>
+    <div class="method-step">
+      <span class="number">02</span>
+      <h3>Concept &amp; Design</h3>
+      <p>Progettiamo concept distintivi che guidino tono visivo, narrazione e materiali di comunicazione.</p>
+    </div>
+    <div class="method-step">
+      <span class="number">03</span>
+      <h3>Esecuzione &amp; Controllo</h3>
+      <p>Realizziamo con rigore: coordinamento produzione, supervisione artistica e controllo qualit&agrave; fino alla consegna.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIZI -->
+<section class="dark" id="services" style="padding-top: 40px;">
+  <h2 class="section-title fade-in">I Nostri Servizi</h2>
+  <p class="section-subtitle fade-in">Progettiamo soluzioni integrate e su misura, calibrate per l'estetica e i risultati.</p>
+  <div class="services-grid fade-in">
+    <div class="service-item">
+      <h3>Creative Direction</h3>
+      <p>Definizione dell'identit&agrave; e supervisione creativa a 360&deg;.</p>
+    </div>
+    <div class="service-item">
+      <h3>Art Direction</h3>
+      <p>Sviluppo di concept visivi, moodboard, direzione fotografica e coordinamento estetico.</p>
+    </div>
+    <div class="service-item">
+      <h3>Production</h3>
+      <p>Gestione completa di shooting, set, casting, logistica e post-produzione.</p>
+    </div>
+    <div class="service-item">
+      <h3>Brand &amp; Social Strategy</h3>
+      <p>Posizionamento, architettura narrativa e piani editoriali pensati per crescere.</p>
+    </div>
+    <div class="service-item">
+      <h3>Exhibition / Event Design</h3>
+      <p>Concept e allestimenti per experience fisiche.</p>
+    </div>
+    <div class="service-item">
+      <h3>Interior Design</h3>
+      <p>Traduzione dell'identit&agrave; di marca nello spazio fisico.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="dark" id="contact" style="padding-top: 40px;">
+  <h2 class="section-title fade-in">Contact</h2>
+  <div class="contact-content fade-in">
+    <p class="contact-cta">Parliamo del vostro progetto</p>
+    <div class="contact-row">
+      <span class="label">Email:</span>
+      <a href="mailto:chiara.iermano@gmail.com">chiara.iermano@gmail.com</a>
+      <span class="divider">|</span>
+      <a href="mailto:lisamercurio@hotmail.it">lisamercurio@hotmail.it</a>
+    </div>
+    <div class="contact-row">
+      <span class="label">Telefono:</span>
+      <a href="tel:+393661952251">Chiara +39 366 195 2251</a>
+      <span class="divider">|</span>
+      <a href="tel:+393208656913">Lisa +39 320 865 6913</a>
+    </div>
+    <div class="contact-row">
+      <span class="label">Instagram:</span>
+      <a href="https://instagram.com/c_iermano" target="_blank" rel="noopener">@c_iermano</a>
+      <span class="divider">|</span>
+      <a href="https://instagram.com/mercurio_lisa" target="_blank" rel="noopener">@mercurio_lisa</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Ennesima Studio
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Chiudi">&times;</button>
+  <button class="lightbox-nav lightbox-prev" aria-label="Precedente">&#8249;</button>
+  <img src="" alt="">
+  <button class="lightbox-nav lightbox-next" aria-label="Successiva">&#8250;</button>
+</div>
+
+<script>
+(function(){
+  /* Nav scroll */
+  const nav = document.getElementById('mainNav');
+  const darkSections = document.querySelectorAll('.hero, section.dark');
+  function checkNav(){
+    const scrolled = window.scrollY > 40;
+    nav.classList.toggle('scrolled', scrolled);
+    const navBottom = nav.offsetHeight + 8;
+    const scrollPos = window.scrollY + navBottom;
+    let overDark = false;
+    darkSections.forEach(s => {
+      const top = s.offsetTop;
+      const bottom = top + s.offsetHeight;
+      if(scrollPos >= top && scrollPos < bottom) overDark = true;
+    });
+    nav.classList.toggle('dark-bg', overDark);
+  }
+  window.addEventListener('scroll', checkNav, {passive:true});
+  checkNav();
+
+  /* Mobile menu */
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', ()=> links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> links.classList.remove('open')));
+
+  /* Active link */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = links.querySelectorAll('a');
+  window.addEventListener('scroll', ()=>{
+    let cur = '';
+    sections.forEach(s => { if(window.scrollY >= s.offsetTop - 200) cur = s.id; });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+    });
+  }, {passive:true});
+
+  /* Fade-in on scroll */
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  /* Lightbox */
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  const items = Array.from(document.querySelectorAll('.photo-item'));
+  let currentIdx = 0;
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', ()=>{
+      currentIdx = i;
+      showLb();
+    });
+  });
+
+  function showLb(){
+    lbImg.src = items[currentIdx].querySelector('img').src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  lb.querySelector('.lightbox-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) closeLb(); });
+
+  function closeLb(){
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  lb.querySelector('.lightbox-prev').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    currentIdx = (currentIdx - 1 + items.length) % items.length;
+    showLb();
+  });
+  lb.querySelector('.lightbox-next').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    currentIdx = (currentIdx + 1) % items.length;
+    showLb();
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLb();
+    if(e.key === 'ArrowLeft'){ currentIdx = (currentIdx - 1 + items.length) % items.length; showLb(); }
+    if(e.key === 'ArrowRight'){ currentIdx = (currentIdx + 1) % items.length; showLb(); }
+  });
+})();
+</script>
+</body>
+</html>
