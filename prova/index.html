@@ -6,6 +6,48 @@
 <title>Chiara Iermano</title>
 <meta name="description" content="Chiara Iermano, fashion and event producer based in Naples. Editorials, campaigns and events for brands and magazines.">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+  /* Aspetto grafico: gestito dal pannello (scheda "Aspetto"), salvato in content.json -> theme */
+  (function(){
+    var SYS='"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
+    var FONTS={
+      "helvetica":{family:SYS},
+      "inter":{family:'"Inter", '+SYS, gf:"Inter:wght@400;700"},
+      "montserrat":{family:'"Montserrat", '+SYS, gf:"Montserrat:wght@400;700"},
+      "space-grotesk":{family:'"Space Grotesk", '+SYS, gf:"Space+Grotesk:wght@400;700"},
+      "dm-mono":{family:'"DM Mono", ui-monospace, monospace', gf:"DM+Mono:wght@400;500"},
+      "cormorant":{family:'"Cormorant Garamond", Georgia, serif', gf:"Cormorant+Garamond:wght@400;700"},
+      "playfair":{family:'"Playfair Display", Georgia, serif', gf:"Playfair+Display:wght@400;700"},
+      "baskerville":{family:'"Libre Baskerville", Georgia, serif', gf:"Libre+Baskerville:wght@400;700"}
+    };
+    function loadFonts(keys){
+      var fams=[]; keys.forEach(function(k){ var f=FONTS[k]; if(f&&f.gf&&fams.indexOf(f.gf)<0) fams.push(f.gf); });
+      var id="ci-gf", l=document.getElementById(id);
+      if(!fams.length){ if(l) l.remove(); return; }
+      var href="https://fonts.googleapis.com/css2?family="+fams.join("&family=")+"&display=swap";
+      if(!l){ l=document.createElement("link"); l.id=id; l.rel="stylesheet"; document.head.appendChild(l); }
+      if(l.href!==href) l.href=href;
+    }
+    window.ciFonts=FONTS;
+    window.ciApplyTheme=function(t){
+      if(!t) return;
+      var s=document.documentElement.style;
+      function v(name,val){ if(val) s.setProperty(name,val); else s.removeProperty(name); }
+      v("--bg",t.bg); v("--ink",t.ink); v("--ink-2",t.ink2); v("--rule",t.rule);
+      var bf=FONTS[t.font]||FONTS.helvetica, hf=FONTS[t.headingFont]||bf;
+      v("--font",bf.family); v("--font-h",hf.family);
+      v("--tt",t.uppercase===false?"none":"uppercase");
+      v("--fs",t.fontSize?t.fontSize+"px":"");
+      v("--grid-cols",t.gridCols?String(t.gridCols):"");
+      v("--ratio",t.photoRatio||"");
+      v("--gray",t.grayscale?"grayscale(1)":"");
+      loadFonts([t.font||"helvetica", t.headingFont||t.font||"helvetica"]);
+    };
+    try{ var c=localStorage.getItem("ci_theme"); if(c) window.ciApplyTheme(JSON.parse(c)); }catch(e){}
+  })();
+</script>
 <style>
   :root{
     --bg:#ffffff;
@@ -14,6 +56,12 @@
     --rule:#000000;
     --gutter:clamp(16px, 6vw, 88px);
     --font:"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    --font-h:var(--font);
+    --tt:uppercase;
+    --fs:14px;
+    --grid-cols:3;
+    --ratio:3 / 4;
+    --gray:none;
     color-scheme: light;
   }
   *{box-sizing:border-box}
@@ -23,7 +71,7 @@
     background:var(--bg);
     color:var(--ink);
     font-family:var(--font);
-    font-size:14px;
+    font-size:var(--fs);
     line-height:1.65;
     letter-spacing:.02em;
     -webkit-font-smoothing:antialiased;
@@ -46,17 +94,18 @@
     flex-wrap:wrap;
   }
   .brand{
+    font-family:var(--font-h);
     font-size:22px;
     font-weight:700;
     letter-spacing:.01em;
-    text-transform:uppercase;
+    text-transform:var(--tt);
     white-space:nowrap;
     line-height:1.2;
   }
   nav{display:flex;gap:clamp(14px, 3vw, 30px);flex-wrap:wrap}
   nav a{
     font-size:13px;
-    text-transform:uppercase;
+    text-transform:var(--tt);
     padding:2px 4px 6px;
     border-bottom:1px solid transparent;
     line-height:1.2;
@@ -72,19 +121,19 @@
   /* home */
   .home-grid{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(var(--grid-cols), 1fr);
     gap:clamp(8px, 1.6vw, 20px);
     margin-top:12px;
   }
   .home-grid figure{margin:0;overflow:hidden;background:#f2f2f2}
   .home-grid img{
     display:block;width:100%;height:100%;
-    aspect-ratio:3 / 4;object-fit:cover;
-    filter:grayscale(0);
+    aspect-ratio:var(--ratio);object-fit:cover;
+    filter:var(--gray);
   }
   .tagline{
     max-width:60ch;
-    text-transform:uppercase;
+    text-transform:var(--tt);
     color:var(--ink-2);
     margin:0 0 4px;
   }
@@ -101,7 +150,7 @@
   }
   .about img{display:block;width:100%;aspect-ratio:4 / 5;object-fit:cover}
   .about-text p{
-    text-transform:uppercase;
+    text-transform:var(--tt);
     text-align:justify;
     margin:0 0 1.6em;
   }
@@ -117,14 +166,15 @@
     max-width:960px;
   }
   .block h2{
-    font-size:14px;
+    font-family:var(--font-h);
+    font-size:calc(var(--fs) + 0px);
     font-weight:700;
-    text-transform:uppercase;
+    text-transform:var(--tt);
     margin:0 0 14px;
     letter-spacing:.04em;
   }
   .block ul{list-style:none;margin:0;padding:0}
-  .block li{text-transform:uppercase;margin:0 0 2px}
+  .block li{text-transform:var(--tt);margin:0 0 2px}
   .block li.note{color:var(--ink-2)}
   .block + .block{margin-top:32px}
 
@@ -145,7 +195,7 @@
     text-underline-offset:4px;
     text-decoration-thickness:1px;
   }
-  .contacts .sub{text-transform:uppercase;color:var(--ink-2)}
+  .contacts .sub{text-transform:var(--tt);color:var(--ink-2)}
 
   /* footer */
   footer{
@@ -157,9 +207,10 @@
     text-align:center;
   }
   .foot-name{
+    font-family:var(--font-h);
     font-size:18px;
     font-weight:700;
-    text-transform:uppercase;
+    text-transform:var(--tt);
     letter-spacing:.06em;
   }
   .social{
@@ -173,7 +224,7 @@
   .social a:hover{opacity:1}
   .social svg{width:20px;height:20px;fill:var(--ink)}
   .foot-copy{
-    text-transform:uppercase;
+    text-transform:var(--tt);
     color:var(--ink-2);
     font-size:12px;
     letter-spacing:.04em;
@@ -182,7 +233,7 @@
   @media (max-width:720px){
     header{padding-top:20px}
     nav{width:100%;gap:18px}
-    .home-grid{grid-template-columns:1fr 1fr}
+    .home-grid{grid-template-columns:repeat(min(var(--grid-cols), 2), 1fr)}
     .about{grid-template-columns:1fr}
     .about img{max-width:220px}
     .about-text p{text-align:left}
@@ -351,6 +402,8 @@
       });
       document.title = (name === "home" ? "" : name.toUpperCase() + " | ") + "Chiara Iermano";
       window.scrollTo(0,0);
+      window.ciView = name;
+      if (window.ciTrack) window.ciTrack(name);
     }
     function fromHash(){ show((location.hash || "#home").replace("#","")); }
     window.addEventListener("hashchange", fromHash);
@@ -379,6 +432,7 @@
       });
     }
     function apply(c){
+      if(c.theme && window.ciApplyTheme) window.ciApplyTheme(c.theme);
       document.querySelectorAll("[data-c]").forEach(function(n){
         var v=n.getAttribute("data-c").split(".").reduce(function(o,k){return o&&o[k];},c);
         if(typeof v==="string") n.textContent=v;
@@ -406,7 +460,49 @@
         if(u){ a.href=u; a.target="_blank"; a.rel="noopener"; a.removeAttribute("data-todo"); a.style.display=""; }
       });
     }
-    fetch("content.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.json():null; }).then(function(c){ if(c) apply(c); }).catch(function(){});
+    /* Statistiche visite (GoatCounter, senza cookie): attive solo se il codice è impostato nel pannello */
+    function startStats(code){
+      code=String(code||"").trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\.goatcounter\.com.*$/,"");
+      if(!/^[a-z0-9-]+$/.test(code) || window.ciTrack) return;
+      var sent={};
+      window.ciTrack=function(view){
+        if(sent[view]) return; sent[view]=1;              // una volta per sezione per visita
+        if(window.goatcounter && window.goatcounter.count) window.goatcounter.count({path:"/"+view, title:view});
+        else (window.ciQueue=window.ciQueue||[]).push(view);
+      };
+      window.goatcounter={no_onload:true, no_events:true};
+      var s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.js";
+      s.setAttribute("data-goatcounter","https://"+code+".goatcounter.com/count");
+      s.onload=function(){ (window.ciQueue||[]).forEach(function(v){ window.goatcounter.count({path:"/"+v, title:v}); }); window.ciQueue=[]; };
+      document.head.appendChild(s);
+      window.ciTrack(window.ciView||"home");
+      // clic su email e social (compaiono tra gli "eventi" nelle statistiche)
+      document.addEventListener("click",function(e){
+        var a=e.target.closest&&e.target.closest("a"); if(!a || !window.goatcounter || !window.goatcounter.count) return;
+        var what=null;
+        if(/^mailto:/.test(a.getAttribute("href")||"")) what="email";
+        else if(a.dataset.social) what=a.dataset.social.toLowerCase();
+        else if(a.id==="contact-ig") what="instagram";
+        if(what && a.getAttribute("href")!=="#") window.goatcounter.count({path:"clic-"+what, title:"Clic "+what, event:true});
+      });
+    }
+
+    var inPreview = window.parent !== window;
+    if(inPreview){
+      // anteprima dal pannello di gestione: riceve la bozza e la mostra senza pubblicarla
+      window.addEventListener("message",function(e){
+        if(e.origin!==location.origin || !e.data || e.data.type!=="ci-preview") return;
+        apply(e.data.content);
+        if(e.data.view && location.hash!=="#"+e.data.view) location.hash=e.data.view;
+      });
+    }
+    fetch("content.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.json():null; }).then(function(c){
+      if(!c) return;
+      apply(c);
+      if(inPreview){ try{ window.parent.postMessage({type:"ci-ready"},location.origin); }catch(e){} return; }
+      try{ localStorage.setItem("ci_theme",JSON.stringify(c.theme||{})); }catch(e){}
+      if(c.stats && c.stats.goatcounter) startStats(c.stats.goatcounter);
+    }).catch(function(){});
   })();
 </script>
 

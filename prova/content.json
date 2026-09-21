@@ -4,16 +4,40 @@
     "title": "Chiara Iermano",
     "description": "Chiara Iermano, fashion and event producer based in Naples. Editorials, campaigns and events for brands and magazines."
   },
-  "nav": { "home": "Home", "about": "About", "services": "Services", "clients": "Clients", "contacts": "Contacts" },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "clients": "Clients",
+    "contacts": "Contacts"
+  },
   "home": {
     "tagline": "Chiara Iermano, fashion and event producer based in Naples. Editorials, campaigns and events for brands and magazines.",
     "photos": [
-      { "src": "images/01-vanity-teen.jpg", "alt": "Editoriale Vanity Teen Magazine, ph. Giuseppe Attanasio" },
-      { "src": "images/05-soallure-ss20.jpg", "alt": "Campagna Soallure S/S 20, ph. Emilio Tini" },
-      { "src": "images/02-man-in-town.jpg", "alt": "Editoriale Man In Town, ph. Giuseppe Attanasio" },
-      { "src": "images/03-mmscene.jpg", "alt": "Editoriale MMScene, ph. Giuseppe Attanasio" },
-      { "src": "images/06-soallure-fw19.jpg", "alt": "Campagna Soallure F/W 2019, ph. Emilio Tini" },
-      { "src": "images/04-lewis-magazine.jpg", "alt": "Editoriale Lewis Magazine, ph. Giuseppe Attanasio" }
+      {
+        "src": "images/01-vanity-teen.jpg",
+        "alt": "Editoriale Vanity Teen Magazine, ph. Giuseppe Attanasio"
+      },
+      {
+        "src": "images/05-soallure-ss20.jpg",
+        "alt": "Campagna Soallure S/S 20, ph. Emilio Tini"
+      },
+      {
+        "src": "images/02-man-in-town.jpg",
+        "alt": "Editoriale Man In Town, ph. Giuseppe Attanasio"
+      },
+      {
+        "src": "images/03-mmscene.jpg",
+        "alt": "Editoriale MMScene, ph. Giuseppe Attanasio"
+      },
+      {
+        "src": "images/06-soallure-fw19.jpg",
+        "alt": "Campagna Soallure F/W 2019, ph. Emilio Tini"
+      },
+      {
+        "src": "images/04-lewis-magazine.jpg",
+        "alt": "Editoriale Lewis Magazine, ph. Giuseppe Attanasio"
+      }
     ]
   },
   "about": {
@@ -27,17 +51,69 @@
   },
   "services": {
     "blocks": [
-      { "title": "Production", "items": ["Fashion editorials", "Photo and video shootings", "(editorials, adv, e-commerce, social media content)", "Casting", "Location scouting", "On-set coordination and logistics"] },
-      { "title": "Campaigns", "items": ["Brand campaigns", "Creative planning", "Team and talent management", "Budget and timeline"] },
-      { "title": "Events", "items": ["Fashion shows", "Presentations and press days", "Brand activations", "Tailor-made occasions"] },
-      { "title": "Consulting", "items": ["Production planning", "Supplier and crew sourcing"] }
+      {
+        "title": "Production",
+        "items": [
+          "Fashion editorials",
+          "Photo and video shootings",
+          "(editorials, adv, e-commerce, social media content)",
+          "Casting",
+          "Location scouting",
+          "On-set coordination and logistics"
+        ]
+      },
+      {
+        "title": "Campaigns",
+        "items": [
+          "Brand campaigns",
+          "Creative planning",
+          "Team and talent management",
+          "Budget and timeline"
+        ]
+      },
+      {
+        "title": "Events",
+        "items": [
+          "Fashion shows",
+          "Presentations and press days",
+          "Brand activations",
+          "Tailor-made occasions"
+        ]
+      },
+      {
+        "title": "Consulting",
+        "items": [
+          "Production planning",
+          "Supplier and crew sourcing"
+        ]
+      }
     ]
   },
   "clients": {
     "blocks": [
-      { "title": "Editorial", "items": ["Vanity Teen Magazine", "Man In Town", "MMScene", "Lewis Magazine"] },
-      { "title": "Advertising", "items": ["Soallure — S/S 20 campaign", "Soallure — F/W 2019 campaign"] },
-      { "title": "Photographers", "items": ["Giuseppe Attanasio", "Emilio Tini"] }
+      {
+        "title": "Editorial",
+        "items": [
+          "Vanity Teen Magazine",
+          "Man In Town",
+          "MMScene",
+          "Lewis Magazine"
+        ]
+      },
+      {
+        "title": "Advertising",
+        "items": [
+          "Soallure — S/S 20 campaign",
+          "Soallure — F/W 2019 campaign"
+        ]
+      },
+      {
+        "title": "Photographers",
+        "items": [
+          "Giuseppe Attanasio",
+          "Emilio Tini"
+        ]
+      }
     ]
   },
   "contacts": {
@@ -57,5 +133,21 @@
     "X": "",
     "WhatsApp": "",
     "YouTube": ""
+  },
+  "theme": {
+    "bg": "#ffffff",
+    "ink": "#000000",
+    "ink2": "#414141",
+    "rule": "#000000",
+    "font": "helvetica",
+    "headingFont": "helvetica",
+    "fontSize": 14,
+    "uppercase": true,
+    "gridCols": 3,
+    "photoRatio": "3 / 4",
+    "grayscale": false
+  },
+  "stats": {
+    "goatcounter": ""
   }
 }
