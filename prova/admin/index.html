@@ -42,7 +42,7 @@
   .about-photo img{width:140px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line)}
   .block{border:1px solid var(--line);padding:12px;margin-bottom:12px}
   .block textarea{min-height:110px}
-  #bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  #bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
   #status{font-size:13px;color:var(--ink-2)}
   #status.ok{color:var(--ok)} #status.err{color:var(--err)}
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0}
@@ -52,6 +52,31 @@
   .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px 20px}
   .hidden{display:none!important}
   code{background:var(--soft);padding:1px 5px;font-size:12px}
+  select{width:100%;padding:10px 12px;border:1px solid var(--line);font:inherit;background:#fff;color:var(--ink)}
+  .look-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px}
+  .color-row{display:flex;gap:8px;align-items:center}
+  .color-row input[type=color]{width:44px;height:40px;padding:2px;border:1px solid var(--line);background:#fff;cursor:pointer;flex:none}
+  .check{display:flex;gap:10px;align-items:center;margin:16px 0 4px;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink);cursor:pointer}
+  .check input{width:18px;height:18px}
+  .presets{display:flex;gap:10px;flex-wrap:wrap}
+  .preset{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0}
+  .preset i{display:inline-block;width:22px;height:22px;border:1px solid var(--line)}
+  .font-sample{font-size:22px;margin:6px 0 0;min-height:32px;color:var(--ink-2)}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .stat{border:1px solid var(--line);padding:14px}
+  .stat b{display:block;font-size:26px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat span{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+  ol.steps{margin:0 0 6px;padding-left:20px} ol.steps li{margin-bottom:6px}
+  .hist{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0;flex-wrap:wrap}
+  .hist:last-child{border-bottom:0}
+  .hist small{color:var(--ink-2);display:block}
+  /* anteprima */
+  #pv{position:fixed;top:0;right:0;bottom:var(--barh,64px);width:min(560px,100%);background:#fff;border-left:1px solid var(--line);box-shadow:-8px 0 30px rgba(0,0,0,.08);display:flex;flex-direction:column;z-index:20}
+  #pv header{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  #pv header select{width:auto;padding:6px 8px}
+  #pv iframe{flex:1;border:0;width:100%;background:#fff}
+  #pv .note{font-size:12px;color:var(--ink-2);padding:6px 12px;border-top:1px solid var(--line)}
+  @media (min-width:1100px){ body.pv-open .wrap{margin-right:580px;margin-left:16px} }
 </style>
 </head>
 <body>
@@ -62,7 +87,7 @@
   <!-- LOGIN -->
   <div class="card" id="login">
     <h2>Accesso</h2>
-    <p class="hint">Inserisci il token GitHub (classic, con permesso <code>repo</code>). Resta salvato solo in questo browser.</p>
+    <p class="hint">Inserisci il token GitHub (classic con permesso <code>repo</code>, oppure fine-grained limitato a questo repository con <code>Contents: Read and write</code>). Resta salvato solo in questo browser.</p>
     <label for="token">Token</label>
     <input type="password" id="token" autocomplete="off" placeholder="ghp_…">
     <div class="row" style="margin-top:14px">
@@ -79,7 +104,10 @@
       <button data-tab="services">Services</button>
       <button data-tab="clients">Clients</button>
       <button data-tab="contacts">Contatti e social</button>
+      <button data-tab="look">Aspetto</button>
       <button data-tab="general">Generale</button>
+      <button data-tab="stats">Statistiche</button>
+      <button data-tab="history">Cronologia</button>
     </div>
 
     <div class="pane on" id="pane-home">
@@ -146,6 +174,85 @@
       </div>
     </div>
 
+    <div class="pane" id="pane-look">
+      <div class="card">
+        <h2>Stili pronti</h2>
+        <p class="hint">Un clic applica colori e caratteri; poi puoi ritoccare tutto qui sotto. Apri l'<b>Anteprima</b> per vedere il risultato prima di pubblicare.</p>
+        <div class="presets" id="presets"></div>
+      </div>
+      <div class="card">
+        <h2>Colori</h2>
+        <div class="look-grid">
+          <div><label for="t-bg">Sfondo</label><div class="color-row"><input type="color" id="t-bg-c"><input type="text" id="t-bg" maxlength="7"></div></div>
+          <div><label for="t-ink">Testo</label><div class="color-row"><input type="color" id="t-ink-c"><input type="text" id="t-ink" maxlength="7"></div></div>
+          <div><label for="t-ink2">Testo secondario</label><div class="color-row"><input type="color" id="t-ink2-c"><input type="text" id="t-ink2" maxlength="7"></div></div>
+          <div><label for="t-rule">Linee del menu</label><div class="color-row"><input type="color" id="t-rule-c"><input type="text" id="t-rule" maxlength="7"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Caratteri</h2>
+        <div class="look-grid">
+          <div><label for="t-font">Carattere dei testi</label><select id="t-font"></select><p class="font-sample" id="t-font-s">Fashion &amp; Event Producer</p></div>
+          <div><label for="t-hfont">Carattere di nome e titoli</label><select id="t-hfont"></select><p class="font-sample" id="t-hfont-s">Chiara Iermano</p></div>
+          <div><label for="t-size">Grandezza dei testi</label>
+            <select id="t-size"><option value="13">Piccola</option><option value="14">Normale</option><option value="15">Media</option><option value="16">Grande</option></select></div>
+        </div>
+        <label class="check"><input type="checkbox" id="t-upper"> Testi tutti in MAIUSCOLO</label>
+      </div>
+      <div class="card">
+        <h2>Foto della home</h2>
+        <div class="look-grid">
+          <div><label for="t-cols">Foto per riga (su computer)</label>
+            <select id="t-cols"><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
+          <div><label for="t-ratio">Formato</label>
+            <select id="t-ratio"><option value="3 / 4">Verticale 3:4</option><option value="4 / 5">Verticale 4:5</option><option value="2 / 3">Verticale alto 2:3</option><option value="1 / 1">Quadrato</option><option value="4 / 3">Orizzontale 4:3</option></select></div>
+        </div>
+        <label class="check"><input type="checkbox" id="t-gray"> Foto in bianco e nero</label>
+      </div>
+      <div class="card">
+        <button id="btn-look-reset">Torna allo stile originale</button>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-stats">
+      <div class="card">
+        <h2>Visite al sito</h2>
+        <div id="stats-off">
+          <p class="hint">Le statistiche usano <b>GoatCounter</b>: gratuito, senza cookie e senza banner privacy. Mostra quante persone visitano il sito, da quali paesi e città, con che dispositivo, da dove arrivano (Instagram, Google…) e quali sezioni guardano.</p>
+          <ol class="steps">
+            <li>Crea un account gratuito su <a href="https://www.goatcounter.com/signup" target="_blank" rel="noopener">goatcounter.com/signup</a> e scegli un codice (es. <code>chiaraiermano</code>).</li>
+            <li>Nelle impostazioni di GoatCounter (<i>Settings</i>) attiva <i>“Allow adding visitor counts on your website”</i>: serve per vedere i numeri anche qui.</li>
+            <li>Scrivi il codice qui sotto e premi <b>Pubblica</b>.</li>
+          </ol>
+        </div>
+        <label for="st-code">Codice GoatCounter</label>
+        <input type="text" id="st-code" placeholder="es. chiaraiermano">
+      </div>
+      <div class="card hidden" id="stats-on">
+        <div class="row" style="justify-content:space-between;margin-bottom:14px">
+          <h2 style="margin:0">Riepilogo</h2>
+          <div class="row">
+            <select id="st-period" style="width:auto"><option value="week">Ultimi 7 giorni</option><option value="month" selected>Ultimi 30 giorni</option><option value="year">Ultimo anno</option><option value="">Da sempre</option></select>
+            <button id="btn-stats-reload" class="small">Aggiorna</button>
+          </div>
+        </div>
+        <div class="stat-grid" id="stats-grid"></div>
+        <p class="hint" id="stats-msg" style="margin:14px 0 0">I numeri si aggiornano ogni qualche ora.</p>
+        <div class="row" style="margin-top:14px">
+          <a id="stats-link" target="_blank" rel="noopener"><button class="primary">Apri statistiche complete</button></a>
+        </div>
+        <p class="hint" style="margin:14px 0 0">Nelle statistiche complete trovi paesi, città, dispositivi, provenienza e i clic su email e social (voce <i>Events</i>). Per non contare le tue visite, apri una volta il sito aggiungendo <code>#toggle-goatcounter</code> in fondo all'indirizzo.</p>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-history">
+      <div class="card">
+        <h2>Versioni pubblicate</h2>
+        <p class="hint">Ogni volta che premi Pubblica viene salvata una versione. Se qualcosa non va, carica una versione precedente, controllala e premi di nuovo Pubblica.</p>
+        <div id="hist-list"><p class="hint">Caricamento…</p></div>
+      </div>
+    </div>
+
     <div class="pane" id="pane-general">
       <div class="card">
         <h2>Generale</h2>
@@ -168,9 +275,22 @@
 <div id="bar" class="hidden">
   <span id="status">Pronto.</span>
   <div class="row">
+    <button id="btn-pv">Anteprima</button>
     <a href="../" target="_blank" rel="noopener"><button>Apri il sito</button></a>
     <button class="primary" id="btn-save">Pubblica</button>
   </div>
+</div>
+
+<div id="pv" class="hidden" aria-label="Anteprima">
+  <header>
+    <b style="font-size:12px;text-transform:uppercase;letter-spacing:.08em">Anteprima</b>
+    <div class="row">
+      <select id="pv-view"><option value="home">Home</option><option value="about">About</option><option value="services">Services</option><option value="clients">Clients</option><option value="contacts">Contacts</option></select>
+      <button class="small" id="pv-close">Chiudi</button>
+    </div>
+  </header>
+  <iframe id="pv-frame" title="Anteprima del sito"></iframe>
+  <div class="note">Bozza non ancora pubblicata: la vedi solo tu.</div>
 </div>
 
 <script>
@@ -180,6 +300,17 @@
   var SOCIALS=["LinkedIn","Instagram","TikTok","Threads","Facebook","X","WhatsApp","YouTube"];
   var NAV=["home","about","services","clients","contacts"];
   var token=null, content=null, contentSha=null, pendingUploads=[]; // {path, base64}
+  var pendingData={}; // anteprima delle foto non ancora pubblicate: path -> dataUrl
+  var THEME_DEFAULT={bg:"#ffffff",ink:"#000000",ink2:"#414141",rule:"#000000",font:"helvetica",headingFont:"helvetica",fontSize:14,uppercase:true,gridCols:3,photoRatio:"3 / 4",grayscale:false};
+  var FONT_LIST=[["helvetica","Helvetica (originale)"],["inter","Inter"],["montserrat","Montserrat"],["space-grotesk","Space Grotesk"],["dm-mono","DM Mono (macchina da scrivere)"],["cormorant","Cormorant Garamond (elegante)"],["playfair","Playfair Display (rivista)"],["baskerville","Libre Baskerville (classico)"]];
+  var FONT_CSS={"helvetica":'"Helvetica Neue",Helvetica,Arial,sans-serif',"inter":'"Inter",sans-serif',"montserrat":'"Montserrat",sans-serif',"space-grotesk":'"Space Grotesk",sans-serif',"dm-mono":'"DM Mono",monospace',"cormorant":'"Cormorant Garamond",serif',"playfair":'"Playfair Display",serif',"baskerville":'"Libre Baskerville",serif'};
+  var PRESETS=[
+    {name:"Originale",t:THEME_DEFAULT},
+    {name:"Crema",t:{bg:"#f6f1ea",ink:"#1f1b16",ink2:"#6b6259",rule:"#1f1b16",font:"helvetica",headingFont:"cormorant",fontSize:14,uppercase:true,gridCols:3,photoRatio:"3 / 4",grayscale:false}},
+    {name:"Rivista",t:{bg:"#ffffff",ink:"#111111",ink2:"#555555",rule:"#b8934f",font:"inter",headingFont:"playfair",fontSize:15,uppercase:false,gridCols:2,photoRatio:"4 / 5",grayscale:false}},
+    {name:"Notte",t:{bg:"#111111",ink:"#f2efe9",ink2:"#a9a39a",rule:"#b8934f",font:"helvetica",headingFont:"helvetica",fontSize:14,uppercase:true,gridCols:3,photoRatio:"3 / 4",grayscale:false}},
+    {name:"Editoriale B/N",t:{bg:"#fafafa",ink:"#000000",ink2:"#5c5c5c",rule:"#000000",font:"dm-mono",headingFont:"dm-mono",fontSize:13,uppercase:false,gridCols:4,photoRatio:"2 / 3",grayscale:true}}
+  ];
 
   function $(id){ return document.getElementById(id); }
   function status(msg, cls){ var s=$("status"); s.textContent=msg; s.className=cls||""; }
@@ -236,7 +367,7 @@
     var c=content;
     $("home-tagline").value=c.home.tagline||"";
     renderPhotos();
-    $("about-img").src="../"+(c.about.photo||"");
+    $("about-img").src=pendingData[c.about.photo]||("../"+(c.about.photo||""));
     $("about-text").value=(c.about.paragraphs||[]).join("\n\n");
     renderBlocks("services"); renderBlocks("clients");
     $("c-email").value=c.contacts.email||""; $("c-ig").value=c.contacts.instagramHandle||"";
@@ -246,6 +377,8 @@
       var i=document.createElement("input"); i.type="url"; i.id="s-"+n; i.value=(c.social&&c.social[n])||""; i.placeholder="https://…";
       var d=document.createElement("div"); d.appendChild(l); d.appendChild(i); sg.appendChild(d);
     });
+    renderLook();
+    $("st-code").value=(c.stats&&c.stats.goatcounter)||""; updateStatsBox();
     $("g-name").value=c.site.name||""; $("g-title").value=c.site.title||""; $("g-desc").value=c.site.description||"";
     $("f-name").value=c.footer.name||""; $("f-tag").value=c.footer.tagline||"";
     var ng=$("nav-grid"); ng.innerHTML="";
@@ -255,6 +388,46 @@
       var d=document.createElement("div"); d.appendChild(l); d.appendChild(i); ng.appendChild(d);
     });
   }
+
+  /* ---------- aspetto ---------- */
+  function fillFonts(sel){ sel.innerHTML=""; FONT_LIST.forEach(function(f){ var o=document.createElement("option"); o.value=f[0]; o.textContent=f[1]; sel.appendChild(o); }); }
+  fillFonts($("t-font")); fillFonts($("t-hfont"));
+  (function(){ // carica i caratteri per i campioni
+    var l=document.createElement("link"); l.rel="stylesheet";
+    l.href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@400;700&family=Space+Grotesk:wght@400;700&family=DM+Mono&family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&family=Libre+Baskerville&display=swap";
+    document.head.appendChild(l);
+  })();
+  var COLORS=["bg","ink","ink2","rule"];
+  function hexOk(v){ return /^#[0-9a-f]{6}$/i.test(v); }
+  COLORS.forEach(function(k){
+    var t=$("t-"+k), c=$("t-"+k+"-c");
+    c.oninput=function(){ t.value=c.value; };
+    t.oninput=function(){ var v=t.value.trim(); if(v&&v[0]!=="#") v="#"+v; if(hexOk(v)) c.value=v; };
+  });
+  function samples(){ $("t-font-s").style.fontFamily=FONT_CSS[$("t-font").value]; $("t-hfont-s").style.fontFamily=FONT_CSS[$("t-hfont").value]; }
+  $("t-font").addEventListener("change",samples); $("t-hfont").addEventListener("change",samples);
+  function renderLook(){
+    var t=Object.assign({},THEME_DEFAULT,content.theme||{});
+    COLORS.forEach(function(k){ $("t-"+k).value=t[k]; $("t-"+k+"-c").value=hexOk(t[k])?t[k]:"#000000"; });
+    $("t-font").value=t.font; $("t-hfont").value=t.headingFont||t.font; $("t-size").value=String(t.fontSize);
+    $("t-upper").checked=t.uppercase!==false; $("t-cols").value=String(t.gridCols); $("t-ratio").value=t.photoRatio; $("t-gray").checked=!!t.grayscale;
+    samples();
+  }
+  function readLook(){
+    var t={};
+    COLORS.forEach(function(k){ var v=$("t-"+k).value.trim(); if(v&&v[0]!=="#") v="#"+v; t[k]=hexOk(v)?v.toLowerCase():THEME_DEFAULT[k]; });
+    t.font=$("t-font").value; t.headingFont=$("t-hfont").value; t.fontSize=parseInt($("t-size").value,10)||14;
+    t.uppercase=$("t-upper").checked; t.gridCols=parseInt($("t-cols").value,10)||3; t.photoRatio=$("t-ratio").value; t.grayscale=$("t-gray").checked;
+    return t;
+  }
+  PRESETS.forEach(function(p){
+    var b=document.createElement("button"); b.className="preset";
+    [p.t.bg,p.t.ink,p.t.rule].forEach(function(c){ var i=document.createElement("i"); i.style.background=c; b.appendChild(i); });
+    b.appendChild(document.createTextNode(p.name));
+    b.onclick=function(){ content.theme=Object.assign({},p.t); renderLook(); schedulePreview(); status("Stile “"+p.name+"” applicato alla bozza: premi Pubblica per metterlo online.","ok"); };
+    $("presets").appendChild(b);
+  });
+  $("btn-look-reset").onclick=function(){ content.theme=Object.assign({},THEME_DEFAULT); renderLook(); schedulePreview(); status("Stile originale ripristinato nella bozza.","ok"); };
 
   function renderPhotos(){
     var g=$("home-photos"); g.innerHTML="";
@@ -269,6 +442,7 @@
       row.appendChild(up); row.appendChild(dn); row.appendChild(rm);
       d.appendChild(img); d.appendChild(alt); d.appendChild(row); g.appendChild(d);
     });
+    schedulePreview();
   }
   function btn(t,fn){ var b=document.createElement("button"); b.className="small"; b.textContent=t; b.onclick=fn; return b; }
   function move(i,dir){ var a=content.home.photos, j=i+dir; if(j<0||j>=a.length) return; var t=a[i]; a[i]=a[j]; a[j]=t; renderPhotos(); }
@@ -286,6 +460,7 @@
       rm.classList.add("danger"); row.appendChild(up); row.appendChild(dn); row.appendChild(rm);
       d.appendChild(lt); d.appendChild(t); d.appendChild(li); d.appendChild(ta); d.appendChild(row); host.appendChild(d);
     });
+    schedulePreview();
   }
   function mv(kind,i,dir){ var a=content[kind].blocks, j=i+dir; if(j<0||j>=a.length) return; var t=a[i]; a[i]=a[j]; a[j]=t; renderBlocks(kind); }
   $("btn-services-add").onclick=function(){ content.services.blocks.push({title:"Nuovo blocco",items:[]}); renderBlocks("services"); };
@@ -314,6 +489,7 @@
       var dataUrl=await resize(f,1600);
       var path="images/"+stamp()+"-"+slug(f.name)+".jpg";
       pendingUploads.push({path:BASE+path, base64:dataUrl.split(",")[1]});
+      pendingData[path]=dataUrl;
       onEach({src:path, dataUrl:dataUrl, name:f.name});
     }
     status("Foto pronte: ricordati di premere Pubblica.","ok");
@@ -326,7 +502,7 @@
   };
   $("btn-about-photo").onclick=function(){ $("about-file").click(); };
   $("about-file").onchange=async function(){
-    try{ await addPhotos(this.files,function(p){ content.about.photo=p.src; $("about-img").src=p.dataUrl; }); }
+    try{ await addPhotos(this.files,function(p){ content.about.photo=p.src; $("about-img").src=p.dataUrl; schedulePreview(); }); }
     catch(e){ status(e.message,"err"); }
     this.value="";
   };
@@ -341,10 +517,11 @@
     c.site.name=$("g-name").value.trim(); c.site.title=$("g-title").value.trim(); c.site.description=$("g-desc").value.trim();
     c.footer.name=$("f-name").value.trim(); c.footer.tagline=$("f-tag").value.trim();
     c.nav={}; NAV.forEach(function(k){ c.nav[k]=$("n-"+k).value.trim(); });
-    // pulizia campi temporanei
-    c.home.photos.forEach(function(p){ delete p.dataUrl; });
+    c.theme=readLook();
+    c.stats={goatcounter:cleanCode($("st-code").value)};
     return c;
   }
+  function toJSON(c){ return JSON.stringify(c,function(k,v){ return k==="dataUrl"?undefined:v; },2); }
   $("btn-save").onclick=async function(){
     var b=$("btn-save"); b.disabled=true;
     try{
@@ -360,13 +537,117 @@
       pendingUploads=[];
       status("Salvo i testi…");
       var cur=await ghGet(BASE+"content.json"); contentSha=cur?cur.sha:null;
-      var res=await ghPut(BASE+"content.json", b64utf8(JSON.stringify(content,null,2)), "Gestione sito: aggiornamento contenuti", contentSha);
+      var res=await ghPut(BASE+"content.json", b64utf8(toJSON(content)), "Gestione sito: aggiornamento contenuti", contentSha);
       contentSha=res.content.sha;
-      renderPhotos();
+      renderPhotos(); $("st-code").value=content.stats.goatcounter; updateStatsBox(); histLoaded=false;
       status("Pubblicato. Online tra circa un minuto (ricarica il sito con Ctrl+F5).","ok");
     }catch(e){ status(e.message,"err"); }
     b.disabled=false;
   };
+
+  /* ---------- anteprima dal vivo ---------- */
+  var pvReady=false, pvTimer=null;
+  function draft(){
+    collect();
+    var d=JSON.parse(toJSON(content));
+    d.home.photos.forEach(function(p,i){ var o=content.home.photos[i]; if(o.dataUrl) p.src=o.dataUrl; else if(pendingData[p.src]) p.src=pendingData[p.src]; });
+    if(pendingData[d.about.photo]) d.about.photo=pendingData[d.about.photo];
+    return d;
+  }
+  function sendPreview(){
+    if(!pvReady || $("pv").classList.contains("hidden") || !content) return;
+    try{ $("pv-frame").contentWindow.postMessage({type:"ci-preview", content:draft(), view:$("pv-view").value}, location.origin); }catch(e){}
+  }
+  function schedulePreview(){ clearTimeout(pvTimer); pvTimer=setTimeout(sendPreview,250); }
+  window.addEventListener("message",function(e){ if(e.origin===location.origin && e.data && e.data.type==="ci-ready"){ pvReady=true; sendPreview(); } });
+  $("editor").addEventListener("input",schedulePreview); $("editor").addEventListener("change",schedulePreview);
+  $("btn-pv").onclick=function(){
+    var pv=$("pv"), open=pv.classList.contains("hidden");
+    pv.classList.toggle("hidden",!open); document.body.classList.toggle("pv-open",open);
+    if(open){ if(!$("pv-frame").src){ pvReady=false; $("pv-frame").src="../?anteprima"; } else sendPreview(); }
+  };
+  function barH(){ document.documentElement.style.setProperty("--barh",$("bar").offsetHeight+"px"); }
+  window.addEventListener("resize",barH); $("btn-pv").addEventListener("click",barH);
+  $("pv-close").onclick=function(){ $("pv").classList.add("hidden"); document.body.classList.remove("pv-open"); };
+  $("pv-view").onchange=sendPreview;
+
+  /* ---------- statistiche ---------- */
+  function cleanCode(v){ return String(v||"").trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\.goatcounter\.com.*$/,"").replace(/[^a-z0-9-]/g,""); }
+  var STAT_ROWS=[["TOTAL","Visite totali"],["/home","Home"],["/about","About"],["/services","Services"],["/clients","Clients"],["/contacts","Contacts"]];
+  function updateStatsBox(){
+    var code=cleanCode(content.stats&&content.stats.goatcounter);
+    $("stats-on").classList.toggle("hidden",!code);
+    $("stats-off").classList.toggle("hidden",!!code);
+    if(code) $("stats-link").href="https://"+code+".goatcounter.com";
+  }
+  async function loadStats(){
+    var code=cleanCode(content.stats&&content.stats.goatcounter); if(!code) return;
+    var g=$("stats-grid"); g.innerHTML=""; var per=$("st-period").value, failed=0;
+    $("stats-msg").textContent="Carico i numeri…";
+    await Promise.all(STAT_ROWS.map(async function(r,i){
+      var box=document.createElement("div"); box.className="stat"+(i===0?" tot":""); box.innerHTML="<b>…</b><span></span>";
+      box.querySelector("span").textContent=r[1]; g.appendChild(box);
+      var url="https://"+code+".goatcounter.com/counter/"+(r[0]==="TOTAL"?"TOTAL":r[0])+".json"+(per?"?start="+per:"");
+      try{
+        var res=await fetch(url,{cache:"no-store"});
+        if(res.status===404){ box.querySelector("b").textContent="0"; return; }
+        if(!res.ok) throw 0;
+        var j=await res.json(); box.querySelector("b").textContent=String(j.count||"0").replace(/,/g,".").replace(/\u202f|\s/g,".");
+      }catch(e){ failed++; box.querySelector("b").textContent="—"; }
+    }));
+    $("stats-msg").textContent = failed
+      ? "Non riesco a leggere i numeri: controlla di aver pubblicato il codice e attivato in GoatCounter “Allow adding visitor counts on your website”. Le statistiche complete funzionano comunque."
+      : "I numeri si aggiornano ogni qualche ora. Una persona che guarda più sezioni conta una volta per ciascuna.";
+  }
+  $("btn-stats-reload").onclick=loadStats; $("st-period").onchange=loadStats;
+
+  /* ---------- cronologia ---------- */
+  var histLoaded=false;
+  async function loadHistory(){
+    var host=$("hist-list"); host.innerHTML='<p class="hint">Caricamento…</p>';
+    try{
+      var r=await fetch("https://api.github.com/repos/"+OWNER+"/"+REPO+"/commits?path="+BASE+"content.json&sha="+BRANCH+"&per_page=20",{headers:headers(),cache:"no-store"});
+      if(!r.ok) throw new Error("GitHub "+r.status);
+      var list=await r.json(); host.innerHTML=""; histLoaded=true;
+      list.forEach(function(cm,i){
+        var d=new Date(cm.commit.author.date);
+        var row=document.createElement("div"); row.className="hist";
+        var info=document.createElement("div");
+        info.innerHTML="<b></b><small></small>";
+        info.querySelector("b").textContent=d.toLocaleDateString("it-IT",{day:"numeric",month:"long",year:"numeric"})+" alle "+d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"})+(i===0?" — versione online":"");
+        info.querySelector("small").textContent=cm.commit.message.split("\n")[0];
+        row.appendChild(info);
+        if(i>0){
+          var b=btn("Carica questa versione",async function(){
+            if(!confirmInline(b)) return;
+            try{
+              var rr=await fetch(API+BASE+"content.json?ref="+cm.sha,{headers:headers(),cache:"no-store"});
+              if(!rr.ok) throw new Error("GitHub "+rr.status);
+              var jj=await rr.json(); content=JSON.parse(utf8b64(jj.content));
+              render(); schedulePreview();
+              status("Caricata la versione del "+d.toLocaleDateString("it-IT")+". Controlla e premi Pubblica per rimetterla online.","ok");
+            }catch(e){ status(e.message,"err"); }
+          });
+          row.appendChild(b);
+        }
+        host.appendChild(row);
+      });
+      if(!list.length) host.innerHTML='<p class="hint">Nessuna versione trovata.</p>';
+    }catch(e){ host.innerHTML='<p class="hint">Non riesco a leggere la cronologia ('+e.message+').</p>'; }
+  }
+  function confirmInline(b){ // doppio clic di conferma, senza finestre di dialogo
+    if(b.dataset.armed){ return true; }
+    b.dataset.armed="1"; var t=b.textContent; b.textContent="Sicuro? Clicca di nuovo";
+    setTimeout(function(){ delete b.dataset.armed; b.textContent=t; },4000);
+    return false;
+  }
+
+  document.querySelectorAll(".tabs button").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(b.dataset.tab==="stats") loadStats();
+      if(b.dataset.tab==="history" && !histLoaded) loadHistory();
+    });
+  });
 })();
 </script>
 </body>
